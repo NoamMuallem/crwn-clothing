@@ -5,7 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import ShopPage from "./pages/shop/shop.component";
 import Header from "./components/header/header.component";
 import SignInAndSignUp from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
-import { auth } from "./firebase/firebase.util";
+import { auth, createUserProfileDocument } from "./firebase/firebase.util";
 
 class App extends React.Component {
   constructor() {
@@ -21,10 +21,28 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      this.setState({ currentUser: user });
+    //runs when the auth status us changed
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      if (userAuth) {
+        //if we gt a userAuth and its not null
+        const userRef = await createUserProfileDocument(userAuth);
 
-      console.log(user);
+        //listen to changes about the user data
+        userRef.onSnapshot(snapShot => {
+          this.setState(
+            {
+              currentUser: {
+                id: snapShot.id,
+                ...snapShot.data()
+              }
+            },
+            () => console.log(this.state)
+          );
+        });
+      } else {
+        //setting currentUser to nul if user is not sign in, userAuth is null...
+        this.setState({ currentUser: userAuth });
+      }
     });
   }
 
