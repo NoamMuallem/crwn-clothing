@@ -29,15 +29,12 @@ class App extends React.Component {
 
         //listen to changes about the user data
         userRef.onSnapshot(snapShot => {
-          this.setState(
-            {
-              currentUser: {
-                id: snapShot.id,
-                ...snapShot.data()
-              }
-            },
-            () => console.log(this.state)
-          );
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data()
+            }
+          });
         });
       } else {
         //setting currentUser to nul if user is not sign in, userAuth is null...
