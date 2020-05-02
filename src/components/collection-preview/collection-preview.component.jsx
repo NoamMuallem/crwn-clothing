@@ -10,8 +10,8 @@ const CollectionPreview = ({ title, items, routeName }) => {
         {/* we wont to preview only 4 items, so we will filter first and then map them */}
         {items
           .filter((item, index) => index < 4)
-          .map(({ id, ...otherItemProps }) => (
-            <CollectionItem key={id} {...otherItemProps} />
+          .map((item) => (
+            <CollectionItem key={item.id} item={item} />
           ))}
       </div>
     </div>
