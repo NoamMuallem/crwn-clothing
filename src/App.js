@@ -68,6 +68,7 @@ class App extends React.Component {
   }
 }
 
+//create prop that get from state (like getter)
 //gets all state, distructure and get only the user
 const mapStateToProps = ({ user }) => ({
   currentUser: user.currentUser,
@@ -75,7 +76,7 @@ const mapStateToProps = ({ user }) => ({
 
 //because app.js only pushing user data/ state forwored and does not change it we put null a the
 //first argument to connect
-
+//-------creat a prop that can change the state like a setter---------
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });
