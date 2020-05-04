@@ -6,12 +6,15 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import ShopPage from "./pages/shop/shop.component";
 import Header from "./components/header/header.component";
 import SignInAndSignUp from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
+import CheckoutPage from "./pages/checkout/checkout.component";
 //authentication
 import { auth, createUserProfileDocument } from "./firebase/firebase.util";
 //redux
 import { connect } from "react-redux";
 //import actions
 import { setCurrentUser } from "./redux/user/user.action";
+import { currentUserSelector } from "./redux/user/user.selector";
+import { createStructuredSelector } from "reselect"; //no need to enter the state in every selector call
 
 class App extends React.Component {
   //a function we get from firebase that allows for the session termination
@@ -55,6 +58,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
+          <Route exact path="/checkout" component={CheckoutPage} />
           <Route
             exact
             path="/signin"
@@ -70,8 +74,8 @@ class App extends React.Component {
 
 //create prop that get from state (like getter)
 //gets all state, distructure and get only the user
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser,
+const mapStateToProps = createStructuredSelector({
+  currentUser: currentUserSelector,
 });
 
 //because app.js only pushing user data/ state forwored and does not change it we put null a the

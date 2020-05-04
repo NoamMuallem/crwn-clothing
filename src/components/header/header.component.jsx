@@ -1,11 +1,20 @@
+// for this component
 import React from "react";
-import { Link } from "react-router-dom";
 import "./header.styles.scss";
 import { ReactComponent as Logo } from "../../assets/images/logo.svg";
+//other components
 import CartIcon from "../cart-icon/cart-icon.component";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
+//router
+import { Link } from "react-router-dom";
+//authentication
 import { auth } from "../../firebase/firebase.util";
+//redux
 import { connect } from "react-redux";
+//"reselect" selectors (to prevent needless re-rendering) and other reselect functions
+import { selectCartHidden } from "../../redux/cart/cart.selectors";
+import { currentUserSelector } from "../../redux/user/user.selector";
+import { createStructuredSelector } from "reselect"; //no need to enter the state in every selector call
 
 const Header = ({ currentUser, hidden }) => {
   return (
@@ -37,10 +46,9 @@ const Header = ({ currentUser, hidden }) => {
 };
 
 //creating props that get the state (like getters)
-const mapStateToProps = (state) => ({
-  //go to the root reducer, go to user, and go to current user property
-  currentUser: state.user.currentUser,
-  hidden: state.cart.hidden,
+const mapStateToProps = createStructuredSelector({
+  currentUser: currentUserSelector,
+  hidden: selectCartHidden,
 });
 
 //returnes a higher order componnent to wrap Header
