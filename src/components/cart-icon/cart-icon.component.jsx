@@ -2,7 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { selecCartItemsCount } from "../../redux/cart/cart.selectors";
 import { toggleCartHidden } from "../../redux/cart/cart.actions";
-import { createStructuredSelector } from "reselect"; //no need to enter the state in every selector call
+//no need to enter the state in every selector call
+import { createStructuredSelector } from "reselect";
 
 import { ReactComponent as ShoppingIcon } from "../../assets/images/shopping-icon.svg";
 
